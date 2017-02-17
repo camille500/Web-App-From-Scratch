@@ -97,31 +97,31 @@
   };
 
   routie({
-    'trending': function() {
+    'trending': () => {
       document.title = 'Trending movies'
       getData.get('movie/popular');
     },
-    'toplist': function() {
+    'toplist': () =>  {
       document.title = 'Top rated movies'
       getData.get('movie/top_rated');
     },
-    'latest': function() {
+    'latest': () =>  {
       document.title = 'Latest movies'
       getData.get('movie/now_playing');
     },
-    'upcoming': function() {
+    'upcoming': () => {
       document.title = 'Upcoming movies'
       getData.get('movie/upcoming');
     },
-    'movie/:id/:title': function(id, title) {
+    'movie/:id/:title': (id, title) => {
       document.title = `Movie: ${title}`;
       getData.get(`movie/${id}`);
     },
-    'random': function() {
+    'random': () => {
      let random = Math.floor((Math.random() * 1000) + 100);
      getData.get(`movie/${random}`);
    },
-    'movie/:id/:title/similar': function(id, title) {
+    'movie/:id/:title/similar': (id, title) => {
       document.title = `Movies like: ${title}`;
       getData.get(`movie/${id}/similar`);
     }
