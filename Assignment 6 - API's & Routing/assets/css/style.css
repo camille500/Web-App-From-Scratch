@@ -181,6 +181,11 @@ nav a {
   color: white;
 }
 
+.title_url {
+  text-decoration: underline;
+  color: #2c3e50;
+}
+
 @media (min-width: 61.25em) {
   nav > ul {
     flex-direction: row;

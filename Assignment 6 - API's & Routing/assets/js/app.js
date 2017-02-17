@@ -114,7 +114,7 @@
       getData.get('movie/upcoming');
     },
     'movie/:id/:title': function(id, title) {
-      document.title = title;
+      document.title = `Movie: ${title}`;
       getData.get(`movie/${id}`);
     },
     'random': function() {
@@ -122,7 +122,7 @@
      getData.get(`movie/${random}`);
    },
     'movie/:id/:title/similar': function(id, title) {
-      document.title = title;
+      document.title = `Movies like: ${title}`;
       getData.get(`movie/${id}/similar`);
     }
   });
