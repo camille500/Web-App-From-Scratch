@@ -2,7 +2,15 @@
 This readme contains all documentation and annotations made during the course.
 
 ## Links to Github Pages
-[Click here for Assignment 6 - Spa](https://camille500.github.io/Web-App-From-Scratch/Assignment%205%20-%20Spa/index.html)
+[Click here for Assignment 5 - Spa](https://camille500.github.io/Web-App-From-Scratch/Assignment%205%20-%20Spa/index.html)
+[Click here for Assignment 6 - Single Page Movie Application](https://camille500.github.io/Web-App-From-Scratch/Assignment%205%20-%20Spa/index.html)
+
+## Navigation
+- [Annotations lesson 1 - 06/02/2017](#annotations-lesson-1---06022017)
+- [Assignments 1st week](#assignments-1st-week)
+- [Annotations lesson 2 - 08/02/2017](#annotations-lesson-2---08022017)
+- [Functional Programming](#annotations-functional-programming)
+- [ES6 Course Annotations](#es6-course-annotations)
 
 ## Annotations lesson 1 - 06/02/2017
 
@@ -161,3 +169,99 @@ volkswagen.toString()
 
 ### Sources Lesson 2
 - (1.9) http://www.javascriptkit.com/javatutors/oopjs2.shtml
+
+## Annotations Functional Programming
+
+- A ***pure function*** is an function that does nothing outside it's own scope. It always returns the same results.
+- A ***unary function*** is a function with one parameter, and one return value.
+
+```javascript
+function calculateAmount(value) {
+    return value * 2;
+}
+```
+- ***Hoisting*** is JavaScript's default behavior of moving declarations to the top (2.1).
+
+### Map, Filter and Reduce
+
+- ```map``` loops over all items in an array.
+
+```javascript
+    const array = [7,12,82,91,16,21];
+    array.map(function(number) {
+        console.log(number);
+    });
+```
+- The code above logs all numbers in the array (one by one) to the console.
+- ```filter``` can be used to, for example, only return values higher than 15.
+
+```javascript
+    const array = [7,12,82,91,16,21];
+    let filtered = array.filter(function(value) {
+      return (value > 15);
+     });
+```
+- The code above returns all values higher than 15.
+- The ***reduce*** method returns a string from a array.
+
+### Sources Functional Programming
+- (2.1) https://www.w3schools.com/js/js_hoisting.asp
+
+## ES6 Course Annotations
+-  The ***let*** variable is only available in block-scope. It's contents are not constant. Use let when you need to reassign a variable, or scope a variable at block level.
+-  The ***const*** variable is constant, and can't be overwritten. Properties in an const variable can be overwritten though.
+
+```javascript
+let thisCanChange = "Hi";
+const apiKey = "28372n3h2uf83jf2";
+```
+
+- In ES6 there is a new way to concat strings and variables. Using the backtick and ```${ ... }```, you can concat a string and variable.
+
+```javascript
+const  studentName = "Camille Sébastien";
+let string = `Hallo, mijn naam is ${studentName}.`
+```
+- There are also a lot of new string methods.
+
+```javascript
+// Checks if the string starts with 'Hallo', in this case TRUE will be returned
+console.log(string.startsWith('Hallo'));
+// Checks if the word 'Hallo' begins from the 3rd character, in this case False
+console.log(string.startsWith('Hallo', 2));
+// Checks if the string ends with 'oud', in this case TRUE will be returned
+console.log(string.endsWith('oud'));
+ // Checks only 20 characters, and thus if 'oud' is at the last 3 of the 20 characters, in this case False
+console.log(string.endsWith('oud', 20));
+// Checks if 'Ik ben' is included inside the string, in this case TRUE.
+console.log(string.includes('Ik ben'));
+```
+
+- ES6 Introduces a new way to declare functions, using arrow functions
+
+```javascript
+// No argument
+const sayHi = () => {
+  console.log('Hi.');
+}
+
+// Single argument
+const greetStudent = name => console.log(`Hi ${name}.`);
+
+// Multiple arguments
+const logStudentInfo = (name, age) => {
+  console.log(`${name} is ${age} jaar oud.`)
+}
+
+// Default parameters
+const logPrice = (price = 22) => { // If 'price' is undefined, the value of 'price' will be 22.
+  console.log(`The item costs €${price},-`);
+}
+```
+
+### Sources ES6 Course Annotations
+- (2.2) https://teamtreehouse.com/library/getting-started-with-es2015
+- (2.3) https://teamtreehouse.com/library/introduction-to-babel
+
+
+## More annotations will follow

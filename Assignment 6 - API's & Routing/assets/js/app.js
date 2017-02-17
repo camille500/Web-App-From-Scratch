@@ -13,6 +13,7 @@
   const movieSingle = document.getElementsByClassName('movie_single')[0];
 
   const App = {
+
     init() {
       if(!window.location.hash) {
         window.location.hash = 'trending';
