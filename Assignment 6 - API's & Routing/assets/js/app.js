@@ -113,14 +113,16 @@
       document.title = 'Upcoming movies'
       getData.get('movie/upcoming');
     },
-    'movie/:id/:title': function(id) {
+    'movie/:id/:title': function(id, title) {
+      document.title = title;
       getData.get(`movie/${id}`);
     },
     'random': function() {
      let random = Math.floor((Math.random() * 1000) + 100);
      getData.get(`movie/${random}`);
    },
-    'movie/:id/:title/similar': function(id) {
+    'movie/:id/:title/similar': function(id, title) {
+      document.title = title;
       getData.get(`movie/${id}/similar`);
     }
   });
