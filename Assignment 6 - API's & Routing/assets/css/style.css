@@ -97,7 +97,7 @@ nav a {
 }
 
 .movie_single img {
-  width: 30%;
+  width: 35%;
   margin-right: 1.25em;
   float: left;
 }
@@ -107,11 +107,11 @@ nav a {
   display: inline-block;
 }
 
-.budget {
+.budget, .revenue {
   color: #27ae60;
 }
 
-.genres li.name {
+.movie_single .genres li.name {
   padding: .5em;
   display: inline;
   padding: .5em;
@@ -120,6 +120,10 @@ nav a {
   color: white;
   font-size: .85em;
   font-weight: 800;
+}
+
+.production_companies li.name::before {
+  content: "-  ";
 }
 
 .movie_meta {
@@ -159,21 +163,22 @@ nav a {
   margin: 0 6px 0 0;
 }
 
-.production_companies .name {
-  display: inline-block;
-}
-
 .wrapper {
   position: absolute;
 }
 
-/*.imdb_url {
-  display: block;
-  padding: 1em;
-  background-color: #E6C321;
+.imdb_url {
+  background-color: #E8C70B;
+  padding: .5em;
   color: white;
-  font-weight: 800;
-}*/
+  margin-top: 1em;
+}
+
+.similar_url {
+  padding: .5em;
+  background-color: #292D46;
+  color: white;
+}
 
 @media (min-width: 61.25em) {
   nav > ul {
@@ -202,4 +207,8 @@ nav a {
 
 .hidden {
   display: none;
+}
+
+.inline {
+  display: inline-block;
 }

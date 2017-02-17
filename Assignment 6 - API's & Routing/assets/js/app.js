@@ -61,11 +61,13 @@
     cleanSingle(data) {
       data.poster_path = `https://image.tmdb.org/t/p/w500/${data.poster_path}`;
       data.budget = this.formatCurrency(data.budget);
+      data.revenue = this.formatCurrency(data.revenue);
       data.runtime = `${(data.runtime / 60).toFixed(1)} uur`;
       data.imdb_id = `http://www.imdb.com/title/${data.imdb_id}`;
       data.production_companies.name = 'hola'
       let attributes = { movie_image: { src: function() { return this.poster_path; }, alt: function() { return this.title; }},
-                         imdb_url: { href: function() { return this.imdb_id }}};
+                         imdb_url: { href: function() { return this.imdb_id }},
+                         similar_url: { href: function() { return `#movie/${this.id}/similar`}}};
       showData.single(data, attributes);
     },
 
@@ -106,6 +108,9 @@
     },
     'movie/:id': function(id) {
       getData.get(`movie/${id}`);
+    },
+    'movie/:id/similar': function(id) {
+      getData.get(`movie/${id}/similar`);
     }
   });
 
