@@ -2,6 +2,9 @@
   - http://handlebarsjs.com/
   - http://projects.jga.me/routie/
   - http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
+  - http://stackoverflow.com/questions/413439/how-to-dynamically-change-a-web-pages-title
+  - https://www.themoviedb.org/
+  - https://developers.themoviedb.org/3
 */
 
 (() => {
@@ -29,7 +32,7 @@
           let data = JSON.parse(request.responseText);
           cleanData.init(data);
         } else {
-          window.location.hash = 'error';
+          window.location.hash = 'random';
         }
       };
       request.onerror = () => {
@@ -54,7 +57,7 @@
         el.backdrop_path = `https://image.tmdb.org/t/p/w500/${el.backdrop_path}`;
       });
       let attributes = { movie_image: { src: function() { return this.backdrop_path; }, alt: function() { return this.title; }},
-                         title_url: { href: function() { return `#movie/${this.id}`; }}};
+                         title_url: { href: function() { return `#movie/${this.id}/${this.title}`; }}};
       showData.list(data.results, attributes);
     },
 
@@ -67,7 +70,7 @@
       data.production_companies.name = 'hola'
       let attributes = { movie_image: { src: function() { return this.poster_path; }, alt: function() { return this.title; }},
                          imdb_url: { href: function() { return this.imdb_id }},
-                         similar_url: { href: function() { return `#movie/${this.id}/similar`}}};
+                         similar_url: { href: function() { return `#movie/${this.id}/${this.title}/similar`}}};
       showData.single(data, attributes);
     },
 
@@ -95,21 +98,29 @@
 
   routie({
     'trending': function() {
+      document.title = 'Trending movies'
       getData.get('movie/popular');
     },
     'toplist': function() {
+      document.title = 'Top rated movies'
       getData.get('movie/top_rated');
     },
     'latest': function() {
+      document.title = 'Latest movies'
       getData.get('movie/now_playing');
     },
     'upcoming': function() {
+      document.title = 'Upcoming movies'
       getData.get('movie/upcoming');
     },
-    'movie/:id': function(id) {
+    'movie/:id/:title': function(id) {
       getData.get(`movie/${id}`);
     },
-    'movie/:id/similar': function(id) {
+    'random': function() {
+     let random = Math.floor((Math.random() * 1000) + 100);
+     getData.get(`movie/${random}`);
+   },
+    'movie/:id/:title/similar': function(id) {
       getData.get(`movie/${id}/similar`);
     }
   });

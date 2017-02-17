@@ -10,7 +10,7 @@ h1, h2, h3, h4, h5 {
 }
 
 p {
-  line-height: 1;
+  line-height: 1.3;
 }
 
 a {
@@ -172,6 +172,7 @@ nav a {
   padding: .5em;
   color: white;
   margin-top: 1em;
+  margin-left: 1em;
 }
 
 .similar_url {
@@ -196,6 +197,15 @@ nav a {
 @media (max-width: 60em) {
   .movie_single img {
     width: 100%;
+  }
+  .movie_single .single_meta {
+    padding: 1em;
+  }
+  .movie_single ul {
+    padding: 0;
+  }
+  .imdb_url {
+    margin-left: 0;
   }
 }
 
