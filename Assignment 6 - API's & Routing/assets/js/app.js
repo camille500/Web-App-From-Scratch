@@ -37,7 +37,7 @@
         }
       };
       request.onerror = () => {
-       console.log('Error');
+       console.error('Error');
       };
       request.send();
     }
@@ -45,7 +45,6 @@
 
   const cleanData = {
     init(originalData) {
-      console.log(originalData);
       if(!originalData.results) {
         this.cleanSingle(originalData);
       } else {
