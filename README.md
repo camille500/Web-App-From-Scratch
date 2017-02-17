@@ -3,7 +3,7 @@ This readme contains all documentation and annotations made during the course.
 
 ## Links to Github Pages
 - [Click here for Assignment 5 - Spa](https://camille500.github.io/Web-App-From-Scratch/Assignment%205%20-%20Spa/index.html)
-- [Click here for Assignment 6 - Single Page Movie Application](https://camille500.github.io/Web-App-From-Scratch/Assignment%205%20-%20Spa/index.html)
+- [Click here for Assignment 6 - Single Page Movie Application](https://camille500.github.io/Web-App-From-Scratch/Assignment%206%20-%20API's%20&%20Routing/)
 
 ## Navigation
 - [Annotations lesson 1 - 06/02/2017](#annotations-lesson-1---06022017)
