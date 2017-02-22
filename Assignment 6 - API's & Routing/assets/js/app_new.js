@@ -6,6 +6,15 @@
   - https://developers.themoviedb.org/3
 */
 
+/* TODO:
+    - Async api calls for caching data
+    - Search on keywords/genres
+    - Search for movies.
+    - Placeholder image for movies without img.
+    - Random movie -> catch errors and show other movie
+    - Reload random movie
+*/
+
 (() => {
   "use strict"
 
@@ -103,7 +112,6 @@
       data.revenue = formatCurrency(data.revenue);
       data.runtime = `${(data.runtime / 60).toFixed(1)} uur`;
       data.imdb_id = `http://www.imdb.com/title/${data.imdb_id}`;
-      data.production_companies.name = 'hola'
       let attributes = {
         movie_image: {
           src: function() {
@@ -181,5 +189,6 @@
   app.init();
 
   console.log(Object.keys(allData));
+  console.log(JSON.stringify(allData));
 
 })();
