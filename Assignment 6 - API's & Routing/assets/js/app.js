@@ -21,6 +21,7 @@
   --------------------------------------------------------------*/
   const movieList = document.getElementsByClassName('movie_list')[0];
   const movieSingle = document.getElementsByClassName('movie_single')[0];
+  const pageTitle = document.getElementById('page_title');
 
   /* All standard filters for displaying movies
   --------------------------------------------------------------*/
@@ -35,15 +36,21 @@
   --------------------------------------------------------------*/
   const app = {
     init() {
+      if (!localStorage.getItem('popular') && !window.location.hash) {
+        getData(allFilters.trending, 'first');
+      } else {
         getData(allFilters.trending, 'popular');
         getData(allFilters.toplist, 'toplist');
         getData(allFilters.latest, 'latest');
         getData(allFilters.upcoming, 'upcoming');
+      }
 
-        this.startPage();
+      this.startPage();
     },
     startPage() {
-      window.location.hash = "trending";
+      if (!window.location.hash) {
+        window.location.hash = "trending";
+      }
     }
   }
 
@@ -60,9 +67,9 @@
         let data = request.responseText;
         let checkData = JSON.parse(request.responseText);
         checkData.key = key;
-        if(!checkData.results) {
+        if (!checkData.results) {
           cleanData.init(checkData);
-        } else if(checkData.key === 'similar') {
+        } else if (checkData.key === 'similar' || checkData.key === 'first') {
           cleanData.init(checkData);
         } else {
           localStorage.setItem(key, data);
@@ -88,8 +95,8 @@
       }
     },
 
-  /* If its 'list' data, map trough it and config the properties & atrributes
-  --------------------------------------------------------------*/
+    /* If its 'list' data, map trough it and config the properties & atrributes
+    --------------------------------------------------------------*/
     list(data) {
       data.results.map(function(el) {
         el.backdrop_path = `https://image.tmdb.org/t/p/w500/${el.backdrop_path}`;
@@ -165,35 +172,45 @@
   routie({
     'trending': () => {
       document.title = 'Trending movies';
+      pageTitle.innerHTML = '&nbsp; - &nbsp; Trending movies';
       let trending_data = JSON.parse(localStorage.getItem('popular'));
       cleanData.list(trending_data);
     },
     'toplist': () => {
       document.title = 'Top rated movies'
+      pageTitle.innerHTML = '&nbsp; - &nbsp; Top rated movies';
       let toplist_data = JSON.parse(localStorage.getItem('toplist'));
       cleanData.list(toplist_data);
     },
     'latest': () => {
       document.title = 'Latest movies'
+      pageTitle.innerHTML = '&nbsp; - &nbsp; Latest movies';
       let latest_data = JSON.parse(localStorage.getItem('latest'));
       cleanData.list(latest_data);
     },
     'upcoming': () => {
       document.title = 'Upcoming movies'
+      pageTitle.innerHTML = '&nbsp; - &nbsp; Upcoming movies';
       let upcoming_data = JSON.parse(localStorage.getItem('upcoming'));
       cleanData.list(upcoming_data);
     },
     'movie/:id/:title': (id, title) => {
       document.title = `Movie: ${title}`;
+      pageTitle.innerHTML = `&nbsp; - &nbsp; ${title}`;
       getData(`movie/${id}`, 'single');
     },
     'random': () => {
       let random = Math.floor((Math.random() * 1000) + 100);
+      pageTitle.innerHTML = '&nbsp; - &nbsp; Random';
       getData(`movie/${random}`, 'random');
     },
     'movie/:id/:title/similar': (id, title) => {
       document.title = `Movies like: ${title}`;
+      pageTitle.innerHTML = `&nbsp; - &nbsp; More like: ${title}`;
       getData(`movie/${id}/similar`, 'similar');
+    },
+    'genre/:genre_id/movies': (id, title) => {
+      console.log(id);
     }
   });
 
