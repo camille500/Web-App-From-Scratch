@@ -7,7 +7,6 @@
 */
 
 /* TODO:
-    - Async api calls for caching data
     - Search on keywords/genres
     - Search for movies.
     - Placeholder image for movies without img.
@@ -32,7 +31,7 @@
     upcoming: 'movie/upcoming'
   };
 
-  /* Initialize app - Get al standard data and save it in object
+  /* Initialize app - Get al standard data and save it in localStorage
   --------------------------------------------------------------*/
   const app = {
     init() {
@@ -89,6 +88,8 @@
       }
     },
 
+  /* If its 'list' data, map trough it and config the properties & atrributes
+  --------------------------------------------------------------*/
     list(data) {
       data.results.map(function(el) {
         el.backdrop_path = `https://image.tmdb.org/t/p/w500/${el.backdrop_path}`;
@@ -111,6 +112,8 @@
       showList(data.results, attributes);
     },
 
+    /* If its 'single' data, config all the properties and attributes
+    --------------------------------------------------------------*/
     single(data) {
       data.poster_path = `https://image.tmdb.org/t/p/w500/${data.poster_path}`;
       data.budget = formatCurrency(data.budget);
@@ -141,18 +144,24 @@
     }
   };
 
+  /* Function for rendering list data into HTML
+  --------------------------------------------------------------*/
   const showList = (cleanedData, attributes) => {
     movieList.classList.remove('hidden');
     movieSingle.classList.add('hidden');
     Transparency.render(movieList, cleanedData, attributes);
   };
 
+  /* Function for rendering single data into HTML
+  --------------------------------------------------------------*/
   const showSingle = (cleanedData, attributes) => {
     movieSingle.classList.remove('hidden');
     movieList.classList.add('hidden');
     Transparency.render(movieSingle, cleanedData, attributes);
   }
 
+  /* Routie for the router handling
+  --------------------------------------------------------------*/
   routie({
     'trending': () => {
       document.title = 'Trending movies';
@@ -188,6 +197,8 @@
     }
   });
 
+  /* Formatting currency (example: 3000000 > €3.000.000,-)
+  --------------------------------------------------------------*/
   const formatCurrency = amount => {
     amount = amount.toFixed(0).replace(/./g, function(c, i, a) {
       return i && c !== "." && ((a.length - i) % 3 === 0) ? '.' + c : c;
@@ -195,6 +206,8 @@
     return `€${amount},-`;
   };
 
+  /* Initialize app, get list data and overwrite localStorage if there is.
+  --------------------------------------------------------------*/
   app.init();
 
 })();
