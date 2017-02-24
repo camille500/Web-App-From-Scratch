@@ -29,6 +29,7 @@ a {
 ---------------------------------------------------- */
 header > nav {
   text-align: center;
+  margin-bottom: 3em;
 }
 
 header nav > h1 {
@@ -213,10 +214,10 @@ header nav li > a:hover {
 
 .search_block {
   padding: 1em;
-  margin-bottom: 2em;
-  margin-top: 0;
-  background-color: rgba(255, 255, 255, 0.7);
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.3);
   text-align: center;
+  bottom: 3em;
 }
 
 .search_block input[type="text"] {
@@ -269,10 +270,28 @@ header nav li > a:hover {
   }
 }
 
+.search_block {
+  display: none;
+}
+
 .hidden {
   display: none;
 }
 
 .inline {
   display: inline-block;
+}
+
+#open_search {
+  padding: .46em;
+}
+
+.search_icon {
+  width: 1.5em;
+  position: relative;
+}
+
+#open_search:before {
+
+
 }
