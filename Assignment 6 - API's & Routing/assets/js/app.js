@@ -22,6 +22,8 @@
   const movieList = document.getElementsByClassName('movie_list')[0];
   const movieSingle = document.getElementsByClassName('movie_single')[0];
   const pageTitle = document.getElementById('page_title');
+  const searchButton = document.getElementById('search_button');
+  const searchField = document.getElementById('search_query');
 
   /* All standard filters for displaying movies
   --------------------------------------------------------------*/
@@ -58,7 +60,13 @@
   --------------------------------------------------------------*/
   const getData = (filter, key) => {
     const request = new XMLHttpRequest();
-    const apiKey = '?api_key=76244b12adc0042d55a0f0f57905f0be';
+    let apiKey;
+    if(key === 'search') {
+     apiKey = '&api_key=76244b12adc0042d55a0f0f57905f0be';
+    } else {
+     apiKey = '?api_key=76244b12adc0042d55a0f0f57905f0be';
+    }
+
     const getUrl = `https://api.themoviedb.org/3/${filter}${apiKey}`;
 
     request.open('GET', getUrl, true);
@@ -66,10 +74,11 @@
       if (request.status >= 200 && request.status < 400) {
         let data = request.responseText;
         let checkData = JSON.parse(request.responseText);
+        console.log(checkData)
         checkData.key = key;
         if (!checkData.results) {
           cleanData.init(checkData);
-        } else if (checkData.key === 'similar' || checkData.key === 'first') {
+        } else if (checkData.key === 'similar' || checkData.key === 'first' || checkData.key === 'search' ) {
           cleanData.init(checkData);
         } else {
           localStorage.setItem(key, data);
@@ -99,7 +108,11 @@
     --------------------------------------------------------------*/
     list(data) {
       data.results.map(function(el) {
-        el.backdrop_path = `https://image.tmdb.org/t/p/w500/${el.backdrop_path}`;
+        if(!el.backdrop_path) {
+          el.backdrop_path = './assets/images/no_picture.svg';
+        } else {
+          el.backdrop_path = `https://image.tmdb.org/t/p/w500/${el.backdrop_path}`;
+        }
       });
       let attributes = {
         movie_image: {
@@ -134,6 +147,13 @@
           },
           alt: function() {
             return this.title;
+          }
+        },
+        genre_id: {
+          href: function() {
+          data.genres.map(function(d, i) {
+              return d.id;
+            })
           }
         },
         imdb_url: {
@@ -209,8 +229,8 @@
       pageTitle.innerHTML = `&nbsp; - &nbsp; More like: ${title}`;
       getData(`movie/${id}/similar`, 'similar');
     },
-    'genre/:genre_id/movies': (id, title) => {
-      console.log(id);
+    'search/:query': (query) => {
+      getData(`search/movie?include_adult=false&page=1&query=${query}&language=en-US`, 'search')
     }
   });
 
@@ -222,6 +242,10 @@
     });
     return `€${amount},-`;
   };
+
+  searchButton.addEventListener("click", function() {
+    window.location = `#search/${searchField.value.toLowerCase()}`;
+  });
 
   /* Initialize app, get list data and overwrite localStorage if there is.
   --------------------------------------------------------------*/
