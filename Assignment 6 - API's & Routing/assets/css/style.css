@@ -25,6 +25,21 @@ a {
   outline: none;
 }
 
+table, td, th {
+    border: 1px solid transparent;
+}
+
+table {
+    border-collapse: collapse;
+    width: 55%;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+}
+
+th {
+    text-align: left;
+}
+
 /* Navigation
 ---------------------------------------------------- */
 header > nav {
@@ -133,13 +148,22 @@ header nav li > a:hover {
   display: inline-block;
 }
 
-.budget, .revenue {
+.table_title {
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+}
+
+.budget {
+  color: #e74c3c;
+}
+
+.revenue {
   color: #27ae60;
 }
 
 .movie_single .genres li.name {
   padding: .5em;
-  display: inline;
+  display: inline-block;
   padding: .5em;
   border-radius: 0.5em;
   background-color: #2980b9;
@@ -190,21 +214,24 @@ header nav li > a:hover {
 }
 
 .wrapper {
-  position: absolute;
+  position: relative;
 }
 
 .imdb_url {
   background-color: #E8C70B;
-  padding: .5em;
+  padding: .75em;
   color: white;
-  margin-top: 1em;
   margin-left: 1em;
+  box-shadow: 5px 6px 20px -5px rgba(0,0,0,0.4);
 }
 
 .similar_url {
-  padding: .5em;
+  padding: .75em;
   background-color: #292D46;
+  margin-top: 20em;
   color: white;
+  box-shadow: 5px 6px 28px -7px rgba(0,0,0,0.47);
+  border: white .25em solid;
 }
 
 .title_url {
@@ -289,9 +316,4 @@ header nav li > a:hover {
 .search_icon {
   width: 1.5em;
   position: relative;
-}
-
-#open_search:before {
-
-
 }

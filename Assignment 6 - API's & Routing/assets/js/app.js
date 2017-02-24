@@ -74,10 +74,10 @@
       if (request.status >= 200 && request.status < 400) {
         let data = request.responseText;
         let checkData = JSON.parse(request.responseText);
-        checkData.key = key;
+        console.log(checkData);
         if (!checkData.results) {
           cleanData.init(checkData);
-        } else if (checkData.key === 'similar' || checkData.key === 'first' || checkData.key === 'search') {
+        } else if (key === 'similar' || key === 'first' || key === 'search') {
           cleanData.init(checkData);
         } else {
           localStorage.setItem(key, data);
@@ -139,6 +139,7 @@
       data.revenue = formatCurrency(data.revenue);
       data.runtime = `${(data.runtime / 60).toFixed(1)} uur`;
       data.imdb_id = `http://www.imdb.com/title/${data.imdb_id}`;
+      data.original_language = data.original_language.toUpperCase();
       let attributes = {
         movie_image: {
           src: function() {
@@ -225,7 +226,7 @@
     },
     'movie/:id/:title/similar': (id, title) => {
       document.title = `Movies like: ${title}`;
-      pageTitle.innerHTML = `&nbsp; - &nbsp; More like: ${title}`;
+      pageTitle.innerHTML = `&nbsp; - &nbsp; More like ${title}`;
       getData(`movie/${id}/similar`, 'similar');
     },
     'search/:query': (query) => {
@@ -242,11 +243,15 @@
     return `€${amount},-`;
   };
 
+  /* Handeling of searchButton click
+  --------------------------------------------------------------*/
   searchButton.addEventListener("click", function() {
     searchBlock.style.display = 'none';
     window.location = `#search/${searchField.value.toLowerCase()}`;
   });
 
+  /* Handeling to show the search block
+  --------------------------------------------------------------*/
   openSearch.addEventListener("click", function() {
     searchBlock.style.display = 'block';
   });
