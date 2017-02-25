@@ -61,6 +61,12 @@
   --------------------------------------------------------------*/
   const getData = (filter, key) => {
     const request = new XMLHttpRequest();
+
+    /* Should be in the config.js (+ .gitignore), but then it doens't work on Github pages
+    --------------------------------------------------------------*/
+    const mainApiKey = 'api_key=76244b12adc0042d55a0f0f57905f0be';
+    /*  ----------------------------------------------------------*/
+    
     const apiKey = mainApiKey;
     const getUrl = `https://api.themoviedb.org/3/${filter}${apiKey}`;
 
