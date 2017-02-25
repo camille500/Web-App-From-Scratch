@@ -40,7 +40,7 @@
     init() {
       if (!localStorage.getItem('popular') && !window.location.hash) {
         getData(allFilters.trending, 'first');
-      } else {
+      } else if(!window.location.hash) { // Only if there is no hash yet
         getData(allFilters.trending, 'popular');
         getData(allFilters.toplist, 'toplist');
         getData(allFilters.latest, 'latest');
@@ -76,7 +76,6 @@
       } else if (request.status >= 200 && request.status < 400) {
         let data = request.responseText;
         let checkData = JSON.parse(request.responseText);
-         console.log(checkData);
         if (!checkData.results) {
           cleanData.init(checkData);
         } else if (key === 'similar' || key === 'first' || key === 'search') {
