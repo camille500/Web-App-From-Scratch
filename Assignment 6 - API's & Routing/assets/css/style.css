@@ -217,21 +217,21 @@ header nav li > a:hover {
   position: relative;
 }
 
-.imdb_url {
-  background-color: #E8C70B;
+.url_btn {
   padding: .75em;
   color: white;
-  margin-left: 1em;
   box-shadow: 5px 6px 20px -5px rgba(0,0,0,0.4);
+}
+
+.imdb_url {
+  background-color: #E8C70B;
+  margin-left: 1em;
 }
 
 .similar_url {
   padding: .75em;
   background-color: #292D46;
   margin-top: 20em;
-  color: white;
-  box-shadow: 5px 6px 28px -7px rgba(0,0,0,0.47);
-  border: white .25em solid;
 }
 
 .title_url {

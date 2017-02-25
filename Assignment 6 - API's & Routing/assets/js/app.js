@@ -28,10 +28,10 @@
   /* All standard filters for displaying movies
   --------------------------------------------------------------*/
   const allFilters = {
-    trending: 'movie/popular',
-    toplist: 'movie/top_rated',
-    latest: 'movie/now_playing',
-    upcoming: 'movie/upcoming'
+    trending: 'movie/popular?',
+    toplist: 'movie/top_rated?',
+    latest: 'movie/now_playing?',
+    upcoming: 'movie/upcoming?'
   };
 
   /* Initialize app - Get al standard data and save it in localStorage
@@ -60,13 +60,7 @@
   --------------------------------------------------------------*/
   const getData = (filter, key) => {
     const request = new XMLHttpRequest();
-    let apiKey;
-    if (key === 'search') {
-      apiKey = '&api_key=76244b12adc0042d55a0f0f57905f0be';
-    } else {
-      apiKey = '?api_key=76244b12adc0042d55a0f0f57905f0be';
-    }
-
+    const apiKey = mainApiKey;
     const getUrl = `https://api.themoviedb.org/3/${filter}${apiKey}`;
 
     request.open('GET', getUrl, true);
@@ -217,20 +211,20 @@
     'movie/:id/:title': (id, title) => {
       document.title = `Movie: ${title}`;
       pageTitle.innerHTML = `&nbsp; - &nbsp; ${title}`;
-      getData(`movie/${id}`, 'single');
+      getData(`movie/${id}?`, 'single');
     },
     'random': () => {
       let random = Math.floor((Math.random() * 1000) + 100);
       pageTitle.innerHTML = '&nbsp; - &nbsp; Random';
-      getData(`movie/${random}`, 'random');
+      getData(`movie/${random}?`, 'random');
     },
     'movie/:id/:title/similar': (id, title) => {
       document.title = `Movies like: ${title}`;
       pageTitle.innerHTML = `&nbsp; - &nbsp; More like ${title}`;
-      getData(`movie/${id}/similar`, 'similar');
+      getData(`movie/${id}/similar?`, 'similar');
     },
     'search/:query': (query) => {
-      getData(`search/movie?include_adult=false&page=1&query=${query}&language=en-US`, 'search')
+      getData(`search/movie?include_adult=false&page=1&query=${query}&language=en-US&`, 'search')
     }
   });
 
