@@ -9,7 +9,6 @@
 
 /* TODO:
     - Search on keywords/genres
-    - Random movie -> catch errors and show other movie
     - Reload random movie
 */
 
@@ -66,13 +65,15 @@
     --------------------------------------------------------------*/
     const mainApiKey = 'api_key=76244b12adc0042d55a0f0f57905f0be';
     /*  ----------------------------------------------------------*/
-    
+
     const apiKey = mainApiKey;
     const getUrl = `https://api.themoviedb.org/3/${filter}${apiKey}`;
 
     request.open('GET', getUrl, true);
     request.onload = () => {
-      if (request.status >= 200 && request.status < 400) {
+      if(request.status === 404) {
+        window.location.reload();
+      } else if (request.status >= 200 && request.status < 400) {
         let data = request.responseText;
         let checkData = JSON.parse(request.responseText);
          console.log(checkData);
