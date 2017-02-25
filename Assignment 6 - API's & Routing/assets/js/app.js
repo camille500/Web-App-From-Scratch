@@ -53,7 +53,7 @@
     },
     startPage() {
       if (!location) {
-        location = "trending";
+        window.location.hash = "trending";
       }
     }
   }
@@ -222,7 +222,10 @@
       getData(`movie/${id}?`, 'single');
     },
     'random': () => {
-      let random = Math.floor((Math.random() * 1000) + 100);
+      let randomizer = Math.floor((Math.random() * 10) + 25);
+      let randomizer2 = Math.floor((Math.random() * 720) + 123)
+      let random = Math.floor((Math.random() * randomizer2) + randomizer);
+      console.log(random)
       pageTitle.innerHTML = '&nbsp; - &nbsp; Random';
       getData(`movie/${random}?`, 'random');
     },
