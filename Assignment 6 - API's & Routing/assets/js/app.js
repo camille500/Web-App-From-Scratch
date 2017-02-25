@@ -24,6 +24,8 @@
   const searchButton = document.getElementById('search_button');
   const searchField = document.getElementById('search_query');
   const openSearch = document.getElementById('open_search');
+  const randomButton = document.querySelector('[href="#random"]');
+  const location = window.location.hash;
 
   /* All standard filters for displaying movies
   --------------------------------------------------------------*/
@@ -38,9 +40,9 @@
   --------------------------------------------------------------*/
   const app = {
     init() {
-      if (!localStorage.getItem('popular') && !window.location.hash) {
+      if (!localStorage.getItem('popular') && !location) {
         getData(allFilters.trending, 'first');
-      } else if(!window.location.hash) { // Only if there is no hash yet
+      } else if(!location) { // Only if there is no hash yet
         getData(allFilters.trending, 'popular');
         getData(allFilters.toplist, 'toplist');
         getData(allFilters.latest, 'latest');
@@ -50,8 +52,8 @@
       this.startPage();
     },
     startPage() {
-      if (!window.location.hash) {
-        window.location.hash = "trending";
+      if (!location) {
+        location = "trending";
       }
     }
   }
@@ -84,7 +86,7 @@
           localStorage.setItem(key, data);
         }
       } else {
-        window.location.hash = 'random';
+        location = 'random';
       }
     };
     request.onerror = () => {
@@ -254,6 +256,14 @@
   --------------------------------------------------------------*/
   openSearch.addEventListener("click", function() {
     searchBlock.style.display = 'block';
+  });
+
+  /* Reload the randomizer if the location is allready '#random'
+  --------------------------------------------------------------*/
+  randomButton.addEventListener("click", function() {
+    if(location === '#random') {
+      window.location.reload();
+    }
   });
 
   /* Initialize app, get list data and overwrite localStorage if there is.
