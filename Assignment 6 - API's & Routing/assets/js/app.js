@@ -1,4 +1,5 @@
 /* Sources:
+  - https://github.com/leonidas/transparency
   - http://projects.jga.me/routie/
   - http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
   - http://stackoverflow.com/questions/413439/how-to-dynamically-change-a-web-pages-title
@@ -68,7 +69,7 @@
       if (request.status >= 200 && request.status < 400) {
         let data = request.responseText;
         let checkData = JSON.parse(request.responseText);
-        console.log(checkData);
+         console.log(checkData);
         if (!checkData.results) {
           cleanData.init(checkData);
         } else if (key === 'similar' || key === 'first' || key === 'search') {
@@ -128,12 +129,13 @@
     /* If its 'single' data, config all the properties and attributes
     --------------------------------------------------------------*/
     single(data) {
+      let releaseDate = new Date(data.release_date);
       data.poster_path = `https://image.tmdb.org/t/p/w500/${data.poster_path}`;
       data.budget = formatCurrency(data.budget);
       data.revenue = formatCurrency(data.revenue);
       data.runtime = `${(data.runtime / 60).toFixed(1)} uur`;
       data.imdb_id = `http://www.imdb.com/title/${data.imdb_id}`;
-      data.original_language = data.original_language.toUpperCase();
+      data.release_date = `${releaseDate.getDate()}-${(releaseDate.getMonth() + 1)}-${releaseDate.getFullYear()}`
       let attributes = {
         movie_image: {
           src: function() {
@@ -143,11 +145,9 @@
             return this.title;
           }
         },
-        genre_id: {
-          href: function() {
-            data.genres.map(function(d, i) {
-              return d.id;
-            })
+        lang_image: {
+          src: function() {
+            return `./assets/images/lang/${this.original_language}.png`;
           }
         },
         imdb_url: {

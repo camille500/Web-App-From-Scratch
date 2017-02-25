@@ -29,6 +29,10 @@ table, td, th {
     border: 1px solid transparent;
 }
 
+tr {
+  height: 1.75em;
+}
+
 table {
     border-collapse: collapse;
     width: 55%;
@@ -36,8 +40,12 @@ table {
     margin-top: 1.5em;
 }
 
-th {
-    text-align: left;
+td:first-child {
+  width: 33%;
+}
+
+td:nth-child(2) {
+  width: 66%;
 }
 
 /* Navigation
@@ -206,7 +214,7 @@ header nav li > a:hover {
 .runtime::before {
   content: "";
   display: block;
-  background: url("../images/clock.png") no-repeat;
+  background: url("../images/clock.svg  ") no-repeat;
   width: 1.25em;
   height: 1.25em;
   float: left;
@@ -218,9 +226,15 @@ header nav li > a:hover {
 }
 
 .url_btn {
-  padding: .75em;
+  transition: .5s;
+  padding: .75em 1em;
   color: white;
   box-shadow: 5px 6px 20px -5px rgba(0,0,0,0.4);
+}
+
+.imdb_url:hover, .similar_url:hover {
+  transition: .5s;
+  padding: 1em 1.25em;;
 }
 
 .imdb_url {
@@ -229,7 +243,6 @@ header nav li > a:hover {
 }
 
 .similar_url {
-  padding: .75em;
   background-color: #292D46;
   margin-top: 20em;
 }
@@ -237,6 +250,10 @@ header nav li > a:hover {
 .title_url {
   text-decoration: underline;
   color: #2c3e50;
+}
+
+.movie_single .lang_image {
+  width: 2em;
 }
 
 .search_block {
@@ -288,6 +305,18 @@ header nav li > a:hover {
   }
   .imdb_url {
     margin-left: 0;
+  }
+  table {
+    width: 90%;
+  }
+  header nav li > a {
+    min-height: 3em;
+  }
+}
+
+@media (max-width: 38.75em) {
+  header nav li > a {
+    min-height: 1em;
   }
 }
 
