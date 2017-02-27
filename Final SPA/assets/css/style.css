@@ -102,16 +102,20 @@ header nav li > a:hover {
 }
 
 .loading {
+  position: fixed;
+  top: 0;
+  left: 0;
   margin-top: -3em;
-  height: 100vh;
+  height: 150vh;
   width: 100vw;
   background-color: #2C3E50;
+  z-index: 1000;
 }
 
 .loader {
     position: relative;
     top: 30%;
-    left: 50%;
+    margin: 0 auto;
     border: .6em solid #fff; /* Light grey */
     border-top: .6em solid #f1c40f; /* Blue */
     border-radius: 50%;
