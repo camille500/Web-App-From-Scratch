@@ -101,6 +101,30 @@ header nav li > a:hover {
 
 }
 
+.loading {
+  margin-top: -3em;
+  height: 100vh;
+  width: 100vw;
+  background-color: #2C3E50;
+}
+
+.loader {
+    position: relative;
+    top: 30%;
+    left: 50%;
+    border: .6em solid #fff; /* Light grey */
+    border-top: .6em solid #f1c40f; /* Blue */
+    border-radius: 50%;
+    width: 5em;
+    height: 5em;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .movie_list {
   display: flex;
   flex-direction: row;
@@ -226,23 +250,25 @@ header nav li > a:hover {
 }
 
 .url_btn {
-  transition: .5s;
+  transition: .2s;
   padding: .75em 1em;
   color: white;
   box-shadow: 5px 6px 20px -5px rgba(0,0,0,0.4);
 }
 
 .imdb_url:hover, .similar_url:hover {
-  transition: .5s;
-  padding: 1em 1.25em;;
+  transition: .2s;
+  padding: .9em 1.1em;;
 }
 
 .imdb_url {
+  display: inline;
   background-color: #E8C70B;
   margin-left: 1em;
 }
 
 .similar_url {
+  display: inline;
   background-color: #292D46;
   margin-top: 20em;
 }

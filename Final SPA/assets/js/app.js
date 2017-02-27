@@ -20,7 +20,8 @@
     searchBtn: document.getElementById('search_button'),
     searchField: document.getElementById('search_query'),
     openSearch: document.getElementById('open_search'),
-    randomButton: document.querySelector('[href="#random"]')
+    randomButton: document.querySelector('[href="#random"]'),
+    loader: document.querySelector('.loading')
   };
 
   /* Generate random numbers
@@ -56,14 +57,13 @@
   --------------------------------------------------------------*/
   const movieData = {
     get(filter, key) {
+      sections.showLoader();
       const getUrl = `https://api.themoviedb.org/3/${filter}${mainApiKey}`;
       const request = new XMLHttpRequest();
       request.open('GET', getUrl, true);
       request.onload = () => {
-        if (request.status === 404) {
-
-          console.log('error');
-
+        if (request.status === 404 && window.location.hash === '#random') {
+          sections.reloadRandom();
         } else if (request.status >= 200 && request.status < 400) {
           let response = JSON.parse(request.responseText);
           if (!response.results) {
@@ -172,13 +172,32 @@
       elements.movieList.classList.remove('hidden');
       elements.movieSingle.classList.add('hidden');
       Transparency.render(elements.movieList, cleanedListData, attributes);
+      setTimeout(function() { sections.hideLoader('list') ; }, 1000);
     },
     renderSingle(cleanedSingleData, attributes) {
-      elements.movieSingle.classList.remove('hidden');
       elements.movieList.classList.add('hidden');
+      elements.movieSingle.classList.remove('hidden');
       Transparency.render(elements.movieSingle, cleanedSingleData, attributes);
+      setTimeout(function() { sections.hideLoader('single') ; }, 1000);
+    },
+    reloadRandom() {
+      let random = Math.floor((Math.random() * randomNumber.two) + randomNumber.one);
+      elements.pageTitle.innerHTML = 'Random movie';
+      movieData.get(`movie/${random}?`, 'random');
+    },
+    highlightMenu(id) {
+      let activeMenuItem = document.querySelector(`[href='#${id}']`);
+      let oldActiveMenuItem = document.querySelector(`[aria-label='current']`);
+      oldActiveMenuItem.setAttribute('aria-label', '');
+      activeMenuItem.setAttribute('aria-label', 'current')
+    },
+    hideLoader(page) {
+      elements.loader.classList.add('hidden');
+    },
+    showLoader(page) {
+      elements.loader.classList.remove('hidden');
     }
-  };
+   };
 
   /* Routie for the router handling
   --------------------------------------------------------------*/
@@ -191,41 +210,46 @@
     },
     'trending': () => {
       document.title = 'Trending movies';
-      elements.pageTitle.innerHTML = '&nbsp; - &nbsp; Trending movies';
+      sections.highlightMenu('trending');
+      elements.pageTitle.innerHTML = 'Trending movies';
       let trending_data = JSON.parse(localStorage.getItem('popular'));
       movieData.cleanList(trending_data);
     },
     'toplist': () => {
       document.title = 'Top rated movies'
-      elements.pageTitle.innerHTML = '&nbsp; - &nbsp; Top rated movies';
+      sections.highlightMenu('toplist');
+      elements.pageTitle.innerHTML = 'Top rated movies';
       let toplist_data = JSON.parse(localStorage.getItem('toplist'));
       movieData.cleanList(toplist_data);
     },
     'latest': () => {
       document.title = 'Latest movies'
-      elements.pageTitle.innerHTML = '&nbsp; - &nbsp; Latest movies';
+      sections.highlightMenu('latest');
+      elements.pageTitle.innerHTML = 'Latest movies';
       let latest_data = JSON.parse(localStorage.getItem('latest'));
       movieData.cleanList(latest_data);
     },
     'upcoming': () => {
       document.title = 'Upcoming movies'
-      elements.pageTitle.innerHTML = '&nbsp; - &nbsp; Upcoming movies';
+      sections.highlightMenu('upcoming');
+      elements.pageTitle.innerHTML = 'Upcoming movies';
       let upcoming_data = JSON.parse(localStorage.getItem('upcoming'));
       movieData.cleanList(upcoming_data);
     },
     'movie/:id/:title': (id, title) => {
       document.title = `Movie: ${title}`;
-      elements.pageTitle.innerHTML = `&nbsp; - &nbsp; ${title}`;
+      elements.pageTitle.innerHTML = `Movie: ${title}`;
       movieData.get(`movie/${id}?`, 'single');
     },
     'random': () => {
+      sections.highlightMenu('random');
       let random = Math.floor((Math.random() * randomNumber.one) + randomNumber.two);
-      elements.pageTitle.innerHTML = '&nbsp; - &nbsp; Random';
+      elements.pageTitle.innerHTML = 'Random movie';
       movieData.get(`movie/${random}?`, 'random');
     },
     'movie/:id/:title/similar': (id, title) => {
-      document.title = `Movies like: ${title}`;
-      elements.pageTitle.innerHTML = `&nbsp; - &nbsp; More like ${title}`;
+      document.title = `Movies like ${title}`;
+      elements.pageTitle.innerHTML = `More like ${title}`;
       movieData.get(`movie/${id}/similar?`, 'similar');
     },
     'search/:query': (query) => {
@@ -233,17 +257,11 @@
     }
   });
 
-  /* Initialize the application
-  ---------------------------------------------------------------- */
-  app.init();
-
   /* Event listners
   ---------------------------------------------------------------- */
   elements.randomButton.addEventListener("click", function() {
     if (window.location.hash === '#random') {
-      let random = Math.floor((Math.random() * randomNumber.two) + randomNumber.one);
-      elements.pageTitle.innerHTML = '&nbsp; - &nbsp; Random';
-      movieData.get(`movie/${random}?`, 'random');
+      sections.reloadRandom();
     }
   });
 
@@ -259,5 +277,10 @@
   elements.openSearch.addEventListener("click", function() {
     elements.searchBlock.style.display = 'block';
   });
+
+
+  /* Initialize the application
+  ---------------------------------------------------------------- */
+  app.init();
 
 }
