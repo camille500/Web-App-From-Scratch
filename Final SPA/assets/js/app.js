@@ -59,7 +59,7 @@
     get(filter, key) {
       sections.showLoader();
       const getUrl = `https://api.themoviedb.org/3/${filter}${mainApiKey}`;
-      
+      const request = new XMLHttpRequest();
       request.open('GET', getUrl, true);
       request.onload = () => {
         if (request.status === 404 && window.location.hash === '#random') {
@@ -113,7 +113,7 @@
     ---------------------------------------------------------------- */
     cleanSingle(singleMovie) {
       let releaseDate = new Date(singleMovie.release_date);
-      if (!singleMovie.poster_path) {
+      if(!singleMovie.poster_path) {
         singleMovie.poster_path = `./assets/images/no_poster.svg`;
       } else {
         singleMovie.poster_path = `https://image.tmdb.org/t/p/w500/${singleMovie.poster_path}`;
@@ -172,17 +172,13 @@
       elements.movieList.classList.remove('hidden');
       elements.movieSingle.classList.add('hidden');
       Transparency.render(elements.movieList, cleanedListData, attributes);
-      setTimeout(function() {
-        sections.hideLoader('list');
-      }, 1000);
+      setTimeout(function() { sections.hideLoader('list') ; }, 1000);
     },
     renderSingle(cleanedSingleData, attributes) {
       elements.movieList.classList.add('hidden');
       elements.movieSingle.classList.remove('hidden');
       Transparency.render(elements.movieSingle, cleanedSingleData, attributes);
-      setTimeout(function() {
-        sections.hideLoader('single');
-      }, 1000);
+      setTimeout(function() { sections.hideLoader('single') ; }, 1000);
     },
     reloadRandom() {
       let random = Math.floor((Math.random() * randomNumber.two) + randomNumber.one);
@@ -201,7 +197,7 @@
     showLoader(page) {
       elements.loader.classList.remove('hidden');
     }
-  };
+   };
 
   /* Routie for the router handling
   --------------------------------------------------------------*/
