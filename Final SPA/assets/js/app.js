@@ -288,6 +288,7 @@
       window.location.hash = "#similar";
     },
     'search/:query': (query) => {
+      sections.highlightMenu('open_search');
       movieData.get(`search/movie?include_adult=false&page=1&query=${query}&language=en-US&`, 'search')
       window.location.hash = "#search";
     }

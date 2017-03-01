@@ -57,6 +57,10 @@ button {
   border: none;
 }
 
+button:focus {
+  background-color: red;
+}
+
 /* Navigation
 ---------------------------------------------------- */
 header > nav {
@@ -389,4 +393,14 @@ header nav li > a:hover {
 .search_icon {
   width: 1.5em;
   position: relative;
+}
+
+/* Footer
+---------------------------------------------------- */
+footer.main {
+  padding: 1.5em;
+  margin-top: 2em;
+  background-color: #2C3E50;
+  color: white;
+  text-align: center;
 }
