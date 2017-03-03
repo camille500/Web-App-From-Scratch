@@ -1,0 +1,273 @@
+table, td, th {
+    border: 1px solid transparent;
+}
+
+tr {
+  height: 1.75em;
+}
+
+table {
+    border-collapse: collapse;
+    width: 55%;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+}
+
+td:first-child {
+  width: 33%;
+}
+
+td:nth-child(2) {
+  width: 66%;
+}
+
+.movie_single p.overview {
+  padding-right: 3em;
+  margin-top: 0;
+}
+
+.movie_single {
+  display: flex;
+  justify-content: center;
+}
+
+.movie_single .wrapper {
+  position: relative;
+  display: block;
+  width: 90%;
+  margin-bottom: 1.75em;
+  background-color: #ecf0f1;
+}
+
+.movie_single img {
+  width: 35%;
+  margin-right: 1.25em;
+  float: left;
+}
+
+.movie_single h1 {
+  margin-top: 1em;
+  display: inline-block;
+}
+
+.table_title {
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+}
+
+.budget {
+  color: #e74c3c;
+}
+
+.revenue {
+  color: #27ae60;
+}
+
+.movie_single .genres li.name {
+  display: inline-block;
+  padding: .5em;
+  border-radius: 0.5em;
+  background-color: #2980b9;
+  color: white;
+  font-size: .85em;
+  font-weight: 800;
+}
+
+.production_companies li.name::before {
+  content: "-  ";
+}
+
+.movie_meta {
+  padding: 0 1em;
+}
+
+.movie_single .vote_average {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: .75em 1.5em;
+  background-color: rgba(44, 62, 80, 0.95);
+  color: white;
+  font-family: 'Lato', serif;
+  font-size: 1.35em;
+  font-weight: 800;
+}
+
+.release_date {
+  margin-top: .5em;
+}
+
+.runtime {
+  display: inline-block;
+  margin-left: 2em;
+  margin-bottom: 0;
+  line-height: 1.25;
+}
+
+.runtime::before {
+  content: "";
+  display: block;
+  background: url("../images/clock.svg  ") no-repeat;
+  width: 1.25em;
+  height: 1.25em;
+  float: left;
+  margin: 0 6px 0 0;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.url_btn {
+  transition: .2s;
+  color: white;
+  box-shadow: 5px 6px 20px -5px rgba(0,0,0,0.4);
+  border-radius: .2em;
+}
+
+.imdb_url:hover, .similar_url:hover {
+  transition: .2s;
+}
+
+.imdb_url {
+  display: inline;
+  background-color: #E8C70B;
+  margin-left: 1em;
+}
+
+.similar_url {
+  display: inline;
+  background-color: #292D46;
+  margin-top: 20em;
+}
+
+.title_url {
+  text-decoration: underline;
+  color: #2c3e50;
+}
+
+.movie_single .lang_image {
+  width: 2em;
+}
+
+.search_block {
+  padding: 1em;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+  bottom: 1em;
+}
+
+.search_block input[type="text"] {
+  display: inline-block;
+  height: 2.2em;
+  width: 30em;
+  margin-top: .2em;
+  padding-left: 1em;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+  outline: none;
+  border: none;
+}
+
+.search_block button {
+  display: inline-block;
+  padding: .55em;
+  margin-left: 2em;
+  width: 20%;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  font-size: 1em;
+}
+
+@media (min-width: 61.25em) {
+  .movie_list .wrapper {
+    width: 30%;
+  }
+}
+
+@media (max-width: 60em) {
+  .movie_single img {
+    width: 100%;
+  }
+  .movie_single .single_meta {
+    padding: 1em;
+  }
+  .movie_single ul {
+    padding: 0;
+  }
+  .similar_url {
+    margin-top: 0;
+    margin-bottom: 1em;
+    display: block;
+  }
+  .imdb_url {
+    margin-left: 0;
+    display: block;
+  }
+  table {
+    width: 90%;
+  }
+  header nav li > a {
+    min-height: 3em;
+  }
+}
+
+@media (max-width: 38.75em) {
+  header nav li > a {
+    min-height: 1em;
+  }
+}
+
+@media (min-width: 40.625em) and (max-width: 61.25em){
+  .movie_list .wrapper {
+    width: 45%;
+  }
+}
+
+.filters {
+  margin-left: 1em;
+  margin-bottom: 2em;
+}
+
+.inline {
+  display: inline;
+}
+
+#open_search {
+  padding: .46em;
+}
+
+.search_icon {
+  width: 1.5em;
+  position: relative;
+}
+
+.genre_id {
+  padding: 0;
+}
+
+
+.search_icon {
+  width: 1.5em;
+  position: relative;
+}
+
+@media screen and (max-width: 54.875em) {
+  header nav li > a {
+    min-height: 2.75em;
+  }
+  #open_search {
+    min-height: 3.2em;
+  }
+  .search_icon {
+    padding-top: .75em;
+    position: relative;
+  }
+}
+
+
+.hidden {
+  display: none;
+}

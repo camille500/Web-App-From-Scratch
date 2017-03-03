@@ -12,15 +12,15 @@
   /* Load all needed elements for DOM manipulation
   --------------------------------------------------------------*/
   const elements = {
-    movieList: document.getElementsByClassName('movie_list')[0],
-    movieSingle: document.getElementsByClassName('movie_single')[0],
-    errorPage: document.getElementsByClassName('error_page')[0],
-    filters: document.getElementsByClassName('filters')[0],
-    pageTitle: document.getElementById('page_title'),
-    searchBlock: document.getElementsByClassName('search_block')[0],
-    searchBtn: document.getElementById('search_button'),
-    searchField: document.getElementById('search_query'),
-    openSearch: document.getElementById('open_search'),
+    movieList: document.querySelector('.movie_list'),
+    movieSingle: document.querySelector('.movie_single'),
+    errorPage: document.querySelector('.error_page'),
+    filters: document.querySelector('.filters'),
+    pageTitle: document.querySelector('#page_title'),
+    searchBlock: document.querySelector('.search_block'),
+    searchBtn: document.querySelector('#search_button'),
+    searchField: document.querySelector('#search_query'),
+    openSearch: document.querySelector('#open_search'),
     randomButton: document.querySelector('[href="#random"]'),
     loader: document.querySelector('.loading')
   };
@@ -59,23 +59,29 @@
   --------------------------------------------------------------*/
   const movieData = {
     get(filter, key) {
-      sections.showOrHideLoader('show'); // Show loaders as soon as get request starts
+      // Show loaders as soon as get request starts
+      sections.showOrHideLoader('show');
+      // Build up the URL for the request, containing the filter and API Key
       const getUrl = `https://api.themoviedb.org/3/${filter}${mainApiKey}`;
       const request = new XMLHttpRequest();
       request.open('GET', getUrl, true);
       request.onload = () => {
+        // If a movie can't be found, start the randomizer
         if (request.status === 404 && window.location.hash === '#random') { // Automatic find new random movie if no results
           sections.reloadRandom();
         } else if (request.status >= 200 && request.status < 400) {
           let response = JSON.parse(request.responseText);
+          // If response.results does not exist, it is an single movie
           if (!response.results) {
             this.cleanSingle(response);
-          } else if (key === 'similar' || key === 'search' || key === 'first') { // Render list instantly without storing in in localStorage
+            // Render list instantly without storing in in localStorage
+          } else if (key === 'similar' || key === 'search' || key === 'first') {
             this.cleanList(response, key);
           } else {
             localStorage.setItem(key, JSON.stringify(response));
           }
         } else {
+          // Show error page
           window.location.hash = "error";
         }
       };
@@ -83,6 +89,7 @@
         sections.showOrHideLoader('hide');
         movieList.classList.add('hidden');
         movieSingle.classList.add('hidden');
+        // Show error page
         errorPage.classList.remove('hidden');
       };
       request.send();
@@ -188,6 +195,7 @@
       elements.movieSingle.classList.add('hidden');
       elements.filters.classList.remove('hidden');
       Transparency.render(elements.movieList, cleanedListData, attributes);
+      // Timeout -> Because: if you have an fast internet connection, you only see the loader blink. Thats ugly
       setTimeout(function() {
         sections.showOrHideLoader('hide');
       }, 1000);
@@ -204,13 +212,14 @@
     },
     // Reload random movie with random ID
     reloadRandom() {
+      // Calculate number for random movie ID
       let random = Math.floor((Math.random() * randomNumber.two) + randomNumber.one);
       elements.pageTitle.innerHTML = 'Random movie';
       movieData.get(`movie/${random}?`, 'random');
     },
     // Highlight the active menu item
     highlightMenu(id) {
-      let activeMenuItem = document.querySelector(`[href='#${id}']`);
+      let activeMenuItem = document.querySelector(`#${id}`);
       let oldActiveMenuItem = document.querySelector(`[aria-label='current']`);
       oldActiveMenuItem.setAttribute('aria-label', '');
       activeMenuItem.setAttribute('aria-label', 'current')
@@ -291,23 +300,25 @@
       });
       /* Handeling to show the search block
       --------------------------------------------------------------*/
-      elements.openSearch.addEventListener("click", function() {
+      elements.openSearch.addEventListener("click", function(event) {
+        event.preventDefault(); // Don't scroll page
         elements.searchBlock.style.display = 'block';
       });
       /* Filter functionality
       --------------------------------------------------------------*/
       document.getElementById('highest_rating').addEventListener("click", function() {
+        // Use on of the filters
         movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'highest_rating');
       });
-
+      // Show all ratings > 5.5 (filter)
       document.getElementById('higher_rating').addEventListener("click", function() {
         movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'higher_rating');
       });
-
+      // Most votes > least votes
       document.getElementById('most_votes').addEventListener("click", function() {
         movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'most_votes');
       });
-
+      // Most popular > least popular
       document.getElementById('most_popular').addEventListener("click", function() {
         movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'most_popular');
       });
@@ -369,6 +380,8 @@
       window.location.hash = "#similar";
     },
     'search/:query': (query) => {
+      document.title = `Search Movie`;
+      elements.pageTitle.innerHTML = `Search results for ${query}`;
       sections.highlightMenu('open_search');
       movieData.get(`search/movie?include_adult=false&page=1&query=${query}&language=en-US&`, 'search')
       window.location.hash = "#search";

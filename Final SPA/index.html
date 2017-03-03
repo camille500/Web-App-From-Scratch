@@ -8,6 +8,7 @@
     <title>MovieSpot</title>
 
     <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="assets/css/movie_style.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 
     <!-- Fonts -->
@@ -19,108 +20,108 @@
 
     <header>
         <nav>
-            <h1><span id="page_title">Moviespot</span></h1>
+            <h1>Moviespot</h1>
             <ul>
-                <li><a href="#trending" aria-label="current">Trending movies</a></li>
-                <li><a href="#toplist">Top rated</a>
-                    <li><a href="#latest">Latest movies</a></li>
-                    <li><a href="#upcoming">Upcoming</a></li>
-                    <li><a href="#random">Random movie</a></li>
-                    <li>
-                        <a href="#open_search" id="open_search"><img class="search_icon" src="./assets/images/search.svg" /></a>
-                    </li>
+                <li><a id="trending" href="#trending" aria-label="current">Trending movies</a></li>
+                <li><a id="toplist" href="#toplist">Top rated movies</a></li>
+                <li><a id="latest" href="#latest">Latest movies</a></li>
+                <li><a id="upcoming" href="#upcoming">Upcoming movies</a></li>
+                <li><a id="random" href="#random">Random movie</a></li>
+                <li><a id="open_search"><img class="search_icon" src="./assets/images/search.svg" /></a></li>
             </ul>
         </nav>
-        <div class="search_block">
+
+        <div class="search_block hidden">
             <input type="text" id="search_query" />
-            <button type="submit" id="search_button">Search</button>
+            <button role="button" type="submit" class="filter-btn" id="search_button">Search</button>
         </div>
+
     </header>
 
-    <section class="loading hidden">
-      <div class="loader"></div>
-    </section>
+    <main>
 
-    <section class="error_page hidden">
-      <h1>Er is een fout opgetreden.</h1>
-    </section>
+        <h1><span id="page_title">Moviespot</span></h1>
 
-    <div class="filters">
-      <button id="highest_rating" class="filter-btn">Higest rating</button>
-      <button id="most_votes" class="filter-btn">Most votes</button>
-      <button id="most_popular" class="filter-btn">Most popular</button>
-      <button id="higher_rating" class="filter-btn">Rating higher than 5.5</button>
-    </div>
-    <section class="movie_list">
-        <div class="wrapper">
-            <img class="movie_image"></img>
-            <span class="vote_average"></span>
-            <div class="movie_meta">
-                <a class="title_url"><h1 class="title"></h1></a>
-                <p class="overview"></p>
+        <section class="loading hidden">
+            <div></div>
+        </section>
+
+        <section class="movie_single">
+            <div class="wrapper">
+                <img class="movie_image"></img>
+                <div class="single_meta">
+                    <span class="vote_average"></span>
+                    <h1 class="title"></h1>
+                    <p class="runtime"></p>
+                    <p class="release_date"></p>
+                    <ul class="genres">
+                        <a class="genre_id">
+                            <li class="name"></li>
+                        </a>
+                    </ul>
+                    <p class="overview"></p>
+                    <table>
+                        <tr>
+                            <td class="table_title">Original title</td>
+                            <td><span class="original_title "></span></td>
+                        </tr>
+                        <tr>
+                            <td class="table_title">Tagline</td>
+                            <td><span class="tagline"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="table_title">Moviebudget</td>
+                            <td><span class="budget"></span></td>
+
+                        </tr>
+                        <tr>
+                            <td class="table_title">Revenue</td>
+                            <td><span class="revenue"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="table_title">Language</td>
+                            <td><img class="lang_image" /></td>
+                        </tr>
+                        <tr>
+                            <td class="table_title">Total votes</td>
+                            <td><span class="vote_count"></span> votes</td>
+                        </tr>
+                    </table>
+                    <p class="inline"><a class="similar_url url_btn filter-btn">More movies like <span class="title"></span></a></p>
+                    <p class="inline"><a target="_blank" class="imdb_url url_btn filter-btn">More on IMDB</a></p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="movie_single">
-        <div class="wrapper">
-            <img class="movie_image"></img>
-            <div class="single_meta">
-                <span class="vote_average"></span>
+        <div class="filters">
+          <button id="highest_rating" class="filter-btn">Higest rating</button>
+          <button id="most_votes" class="filter-btn">Most votes</button>
+          <button id="most_popular" class="filter-btn">Most popular</button>
+          <button id="higher_rating" class="filter-btn">Rating higher than 5.5</button>
+        </div>
+
+        <div class="movie_list">
+            <article>
                 <h1 class="title"></h1>
-                <p class="runtime"></p>
-                <p class="release_date"></p>
-                <ul class="genres">
-                    <a class="genre_id">
-                        <li class="name"></li>
-                    </a>
-                </ul>
-                <p class="overview"></p>
-                <table>
-                  <tr>
-                      <td class="table_title">Original title</td>
-                      <td><span class="original_title "></span></td>
-                  </tr>
-                  <tr>
-                      <td class="table_title">Tagline</td>
-                      <td><span class="tagline"></span></td>
-                  </tr>
-                    <tr>
-                        <td class="table_title">Moviebudget</td>
-                        <td><span class="budget"></span></td>
+                <figure>
+                    <!-- Portrait -->
+                    <img class="movie_image" />
+                    <span class="vote_average"></span>
+                    <figcaption>
+                        <p class="overview"></p>
+                        <footer>
+                            <time class="release_date"></time> <a class="title_url">Official Website</a>
+                        </footer>
+                    </figcaption>
+                </figure>
+            </article>
+        </div>
 
-                    </tr>
-                    <tr>
-                        <td class="table_title">Revenue</td>
-                        <td><span class="revenue"></span></td>
-                    </tr>
-                    <tr>
-                        <td class="table_title">Language</td>
-                        <td><img class="lang_image" /></td>
-                    </tr>
-                    <tr>
-                        <td class="table_title">Total votes</td>
-                        <td><span class="vote_count"></span> votes</td>
-                    </tr>
-                </table>
-                <p class="inline"><a class="similar_url url_btn">More movies like <span class="title"></span></a></p>
-                <p class="inline"><a target="_blank" class="imdb_url url_btn">More on IMDB</a></p>
-            </div>
         </div>
-    </section>
 
-    <section class="genre_list">
-        <div class="wrapper">
-            <ul class="genres">
-                <a class="genre_link">
-                    <li class="name"></li>
-                </a>
-            </ul>
-        </div>
-        </div>
 
         <footer class="main">
-          <p>Website by Camille Sébastien Niessen</p>
+            <p>Website by Camille Sébastien Niessen | Movies from <a href="https://www.themoviedb.org/">TheMovieDatabase</a></p>
         </footer>
 
         <!-- JavaScript  -->
