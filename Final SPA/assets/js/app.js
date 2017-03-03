@@ -90,13 +90,7 @@
             ---------------------------------------------------------------- */
             cleanList(movieList, key = 'basic') {
                 movieList.results.map(function(movie) {
-                    if (!movie.backdrop_path || movie.backdrop_path === './assets/images/no_picture.svg') {
-                        movie.backdrop_path = './assets/images/no_picture.svg';
-                    } else if (movie.backdrop_path.startsWith('https://')) {
-                        movie.backdrop_path = movie.backdrop_path;
-                    } else {
-                        movie.backdrop_path = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
-                    }
+                    movie.backdrop_path = utils.createBackdropPath(movie.backdrop_path);
                 });
                 let attributes = {
                     movie_image: {
@@ -121,17 +115,12 @@
             /* Clean data for the single (detail) view
             ---------------------------------------------------------------- */
             cleanSingle(singleMovie) {
-                let releaseDate = new Date(singleMovie.release_date);
-                if (!singleMovie.poster_path) {
-                    singleMovie.poster_path = `./assets/images/no_poster.svg`;
-                } else {
-                    singleMovie.poster_path = `https://image.tmdb.org/t/p/w500/${singleMovie.poster_path}`;
-                }
-                singleMovie.budget = this.formatCurrency(singleMovie.budget);
-                singleMovie.revenue = this.formatCurrency(singleMovie.revenue);
-                singleMovie.runtime = `${(singleMovie.runtime / 60).toFixed(1)} uur`;
-                singleMovie.imdb_id = `http://www.imdb.com/title/${singleMovie.imdb_id}`;
-                singleMovie.release_date = `${releaseDate.getDate()}-${(releaseDate.getMonth() + 1)}-${releaseDate.getFullYear()}`
+                singleMovie.poster_path = utils.createPosterPath(singleMovie.poster_path);
+                singleMovie.budget = utils.formatCurrency(singleMovie.budget);
+                singleMovie.revenue = utils.formatCurrency(singleMovie.revenue);
+                singleMovie.runtime = utils.durationToHours(singleMovie.runtime);
+                singleMovie.imdb_id = utils.createImdbUrl(singleMovie.imdb_id);
+                singleMovie.release_date = utils.formatReleaseDate(singleMovie.release_date);
                 let attributes = {
                     movie_image: {
                         src: function() {
@@ -180,14 +169,6 @@
                     });
                 }
                 movieData.cleanList(movieList)
-            },
-            /* Format currency with regular expressions
-            ---------------------------------------------------------------- */
-            formatCurrency(amount) {
-                amount = amount.toFixed(0).replace(/./g, function(c, i, a) {
-                    return i && c !== "." && ((a.length - i) % 3 === 0) ? '.' + c : c;
-                });
-                return `€${amount},-`;
             }
     };
 
@@ -230,6 +211,55 @@
                     elements.loader.classList.add('hidden');
                 }
             }
+    };
+
+    /* Object with all utility methods
+    ---------------------------------------------------------------- */
+    const utils = {
+      /* Method for creating the poster path
+      ---------------------------------------------------------------- */
+      createPosterPath(path) {
+        if (!path) {
+            return `./assets/images/no_poster.svg`;
+        } else {
+            return `https://image.tmdb.org/t/p/w500/${path}`;
+        }
+      },
+      /* Method for creating the backdrop path
+      ---------------------------------------------------------------- */
+      createBackdropPath(path) {
+        if (!path || path === './assets/images/no_picture.svg') {
+            return './assets/images/no_picture.svg';
+        } else if (path.startsWith('https://')) {
+            return path;
+        } else {
+            return `https://image.tmdb.org/t/p/w500${path}`;
+        }
+      },
+      /* Method that formats the number (3000000) to an amount in euro's using a regular expression
+      ---------------------------------------------------------------- */
+      formatCurrency(amount) {
+          amount = amount.toFixed(0).replace(/./g, function(c, i, a) {
+              return i && c !== "." && ((a.length - i) % 3 === 0) ? '.' + c : c;
+          });
+          return `€${amount},-`;
+      },
+      /* Method calculates duration from minutes to hours
+      ---------------------------------------------------------------- */
+      durationToHours(duration) {
+          return `${(duration / 60).toFixed(1)} uur`
+      },
+      /* Method for concatting the IMDB URL with the ID of the movie.
+      ---------------------------------------------------------------- */
+      createImdbUrl(id) {
+          return `http://www.imdb.com/title/${id}`;
+      },
+      /* Method for concatting the IMDB URL with the ID of the movie.
+      ---------------------------------------------------------------- */
+      formatReleaseDate(date) {
+          let releaseDate = new Date(date);
+          return `${releaseDate.getDate()}-${(releaseDate.getMonth() + 1)}-${releaseDate.getFullYear()}`
+      }
     };
 
     /* Routie for the router handling
