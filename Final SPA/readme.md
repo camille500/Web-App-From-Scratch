@@ -29,3 +29,11 @@ MovieSpot is a Single Page movie database. It's possible to check out the latest
 - Rate movies from this SPA -> Post to themoviedb
 - Include trailers from other API
 - Include more filter options
+
+## Sources
+- https://github.com/leonidas/transparency
+- http://projects.jga.me/routie/
+- http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
+- http://stackoverflow.com/questions/413439/how-to-dynamically-change-a-web-pages-title
+- https://www.themoviedb.org/
+- https://developers.themoviedb.org/3
