@@ -45,6 +45,7 @@
   --------------------------------------------------------------*/
   const app = {
     init() {
+      events.init();
       if (window.location.hash != '#random') {
         movieData.get(basicFilters.trending, 'trending');
         movieData.get(basicFilters.toplist, 'toplist');
@@ -58,7 +59,7 @@
   --------------------------------------------------------------*/
   const movieData = {
     get(filter, key) {
-      sections.showOrHideLoader('show');
+      sections.showOrHideLoader('show'); // Show loaders as soon as get request starts
       const getUrl = `https://api.themoviedb.org/3/${filter}${mainApiKey}`;
       const request = new XMLHttpRequest();
       request.open('GET', getUrl, true);
@@ -273,9 +274,45 @@
     }
   };
 
+  /* All Event listners
+  ---------------------------------------------------------------- */
   const events = {
+    init() {
+      elements.randomButton.addEventListener("click", function() {
+        if (window.location.hash === '#random') {
+          sections.reloadRandom();
+        }
+      });
+      /* Handeling of searchButton click
+    --------------------------------------------------------------*/
+      elements.searchBtn.addEventListener("click", function() {
+        elements.searchBlock.style.display = 'none';
+        window.location = `#search/${elements.searchField.value.toLowerCase()}`;
+      });
+      /* Handeling to show the search block
+      --------------------------------------------------------------*/
+      elements.openSearch.addEventListener("click", function() {
+        elements.searchBlock.style.display = 'block';
+      });
+      /* Filter functionality
+      --------------------------------------------------------------*/
+      document.getElementById('highest_rating').addEventListener("click", function() {
+        movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'highest_rating');
+      });
 
-  }
+      document.getElementById('higher_rating').addEventListener("click", function() {
+        movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'higher_rating');
+      });
+
+      document.getElementById('most_votes').addEventListener("click", function() {
+        movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'most_votes');
+      });
+
+      document.getElementById('most_popular').addEventListener("click", function() {
+        movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'most_popular');
+      });
+    }
+  };
 
   /* Routie for the router handling
   --------------------------------------------------------------*/
@@ -336,46 +373,6 @@
       movieData.get(`search/movie?include_adult=false&page=1&query=${query}&language=en-US&`, 'search')
       window.location.hash = "#search";
     }
-  });
-
-  /* Event listners
-  ---------------------------------------------------------------- */
-  elements.randomButton.addEventListener("click", function() {
-    if (window.location.hash === '#random') {
-      sections.reloadRandom();
-    }
-  });
-
-  /* Handeling of searchButton click
---------------------------------------------------------------*/
-  elements.searchBtn.addEventListener("click", function() {
-    elements.searchBlock.style.display = 'none';
-    window.location = `#search/${elements.searchField.value.toLowerCase()}`;
-  });
-
-  /* Handeling to show the search block
-  --------------------------------------------------------------*/
-  elements.openSearch.addEventListener("click", function() {
-    elements.searchBlock.style.display = 'block';
-  });
-
-  /* Filter functionality
-  --------------------------------------------------------------*/
-  document.getElementById('highest_rating').addEventListener("click", function() {
-    movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'highest_rating');
-  });
-
-  document.getElementById('higher_rating').addEventListener("click", function() {
-    movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'higher_rating');
-  });
-
-
-  document.getElementById('most_votes').addEventListener("click", function() {
-    movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'most_votes');
-  });
-
-  document.getElementById('most_popular').addEventListener("click", function() {
-    movieData.filterList(JSON.parse(localStorage.getItem(window.location.hash.replace(/^#+/, ""))), 'most_popular');
   });
 
 
