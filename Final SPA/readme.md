@@ -23,3 +23,9 @@ MovieSpot is a Single Page movie database. It's possible to check out the latest
 
 ## SPA Diagram
 ![Flow Diagram](./SPA-Diagram.png "Flow Diagram")
+
+## Wishlist
+- Search movies based on genres
+- Rate movies from this SPA -> Post to themoviedb
+- Include trailers from other API
+- Include more filter options

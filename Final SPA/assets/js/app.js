@@ -166,23 +166,20 @@
                     movieList.results.sort(function(a, b) {
                         return b.vote_average - a.vote_average;
                     });
-                    movieData.cleanList(movieList)
                 } else if (type === 'higher_rating') {
                     movieList.results = movieList.results.filter(function(movie) {
                         return movie.vote_average > 5.5;
                     });
-                    movieData.cleanList(movieList)
                 } else if (type === 'most_votes') {
                     movieList.results.sort(function(a, b) {
                         return b.vote_count - a.vote_count;
                     });
-                    movieData.cleanList(movieList)
                 } else if (type === 'most_popular') {
                     movieList.results.sort(function(a, b) {
                         return b.popularity.toFixed(1) - a.popularity.toFixed(1);
                     });
-                    movieData.cleanList(movieList)
                 }
+                movieData.cleanList(movieList)
             },
             /* Format currency with regular expressions
             ---------------------------------------------------------------- */
